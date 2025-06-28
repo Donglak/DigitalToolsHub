@@ -7,7 +7,7 @@ function doPost(e) {
     const data = JSON.parse(e.postData.contents);
     
     // Open the Google Sheet (replace with your sheet ID)
-    const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE';
+    const SHEET_ID = '1yo39qlG02_yKby5is8LcFadZMNAZ-eyZQavIC37ki7M';
     const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
     
     // Add headers if this is the first row
