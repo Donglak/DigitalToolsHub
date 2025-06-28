@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { Mail, CheckCircle } from 'lucide-react';
-import { submitToGoogleSheets } from '../services/googleSheets';
+import { Mail, CheckCircle, AlertCircle } from 'lucide-react';
+import { submitToGoogleSheets, validateEmail } from '../services/googleSheets';
 
 interface NewsletterFormProps {
   className?: string;
+  source?: string;
 }
 
-const NewsletterForm: React.FC<NewsletterFormProps> = ({ className = '' }) => {
+const NewsletterForm: React.FC<NewsletterFormProps> = ({ 
+  className = '', 
+  source = 'newsletter_form' 
+}) => {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -15,37 +19,51 @@ const NewsletterForm: React.FC<NewsletterFormProps> = ({ className = '' }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Reset states
+    setError('');
+    
+    // Validate email
     if (!email.trim()) {
-      setError('Please enter your email address');
+      setError('Vui lòng nhập địa chỉ email');
       return;
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Please enter a valid email address');
+    if (!validateEmail(email.trim())) {
+      setError('Vui lòng nhập địa chỉ email hợp lệ');
       return;
     }
 
     setIsSubmitting(true);
-    setError('');
 
     try {
+      // Submit to Google Sheets
       await submitToGoogleSheets({
         name: '', // No name field in this form
         email: email.trim(),
         timestamp: new Date().toISOString(),
-        source: 'newsletter_form'
+        source: source
       });
 
+      // Show success state
       setIsSuccess(true);
       setEmail('');
       
-      // Reset success state after 3 seconds
+      // Reset success state after 5 seconds
       setTimeout(() => {
         setIsSuccess(false);
-      }, 3000);
+      }, 5000);
+
+      // Track successful subscription (optional analytics)
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'newsletter_subscribe', {
+          event_category: 'engagement',
+          event_label: source
+        });
+      }
+
     } catch (error) {
       console.error('Newsletter subscription failed:', error);
-      setError('Failed to subscribe. Please try again.');
+      setError('Đã xảy ra lỗi khi đăng ký. Vui lòng thử lại sau.');
     } finally {
       setIsSubmitting(false);
     }
@@ -53,9 +71,12 @@ const NewsletterForm: React.FC<NewsletterFormProps> = ({ className = '' }) => {
 
   if (isSuccess) {
     return (
-      <div className={`flex items-center justify-center gap-2 text-white ${className}`}>
-        <CheckCircle className="w-5 h-5" />
-        <span>Thank you for subscribing!</span>
+      <div className={`flex items-center justify-center gap-3 text-white bg-green-500/20 backdrop-blur-sm rounded-lg p-4 ${className}`}>
+        <CheckCircle className="w-6 h-6 text-green-400" />
+        <div className="text-center">
+          <div className="font-semibold">Cảm ơn bạn đã đăng ký!</div>
+          <div className="text-sm text-white/80">Chúng tôi sẽ gửi những thông tin hữu ích nhất đến email của bạn.</div>
+        </div>
       </div>
     );
   }
@@ -71,35 +92,39 @@ const NewsletterForm: React.FC<NewsletterFormProps> = ({ className = '' }) => {
               setEmail(e.target.value);
               setError(''); // Clear error when user types
             }}
-            placeholder="Enter your email"
-            className="w-full px-6 py-4 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+            placeholder="Nhập email của bạn"
+            className="w-full px-6 py-4 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
             disabled={isSubmitting}
+            required
           />
           {error && (
-            <p className="text-red-200 text-sm mt-2">{error}</p>
+            <div className="flex items-center gap-2 text-red-200 text-sm mt-2">
+              <AlertCircle className="w-4 h-4" />
+              {error}
+            </div>
           )}
         </div>
         <button
           type="submit"
-          disabled={isSubmitting}
-          className="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          disabled={isSubmitting || !email.trim()}
+          className="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-w-[140px]"
         >
           {isSubmitting ? (
             <>
               <div className="w-5 h-5 border-2 border-primary-600/30 border-t-primary-600 rounded-full animate-spin"></div>
-              Subscribing...
+              Đang gửi...
             </>
           ) : (
             <>
               <Mail className="w-5 h-5" />
-              Subscribe
+              Đăng ký
             </>
           )}
         </button>
       </div>
       
       <p className="text-white/70 text-sm text-center">
-        Join 50,000+ subscribers. No spam, unsubscribe anytime.
+        Tham gia cùng 50,000+ người đăng ký. Không spam, hủy đăng ký bất cứ lúc nào.
       </p>
     </form>
   );
