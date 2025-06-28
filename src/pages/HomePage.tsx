@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Bot, TrendingUp, DollarSign, Star, Users, Award, CheckCircle, Mail } from 'lucide-react';
+import NewsletterForm from '../components/NewsletterForm';
 
 const HomePage = () => {
   const categories = [
@@ -274,20 +275,7 @@ const HomePage = () => {
               delivered straight to your inbox.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-6 py-4 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
-              />
-              <button className="bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold transition-colors">
-                Subscribe
-              </button>
-            </div>
-            
-            <p className="text-white/70 text-sm mt-4">
-              Join 50,000+ subscribers. No spam, unsubscribe anytime.
-            </p>
+            <NewsletterForm />
           </div>
         </div>
       </section>

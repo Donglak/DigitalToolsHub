@@ -1,8 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Zap, Twitter, Linkedin, Facebook, Mail, Youtube } from 'lucide-react';
+import { submitToGoogleSheets } from '../services/googleSheets';
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email.trim()) {
+      setError('Please enter your email address');
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      await submitToGoogleSheets({
+        name: '',
+        email: email.trim(),
+        timestamp: new Date().toISOString(),
+        source: 'footer_newsletter'
+      });
+
+      setIsSuccess(true);
+      setEmail('');
+      
+      // Reset success state after 3 seconds
+      setTimeout(() => {
+        setIsSuccess(false);
+      }, 3000);
+    } catch (error) {
+      console.error('Newsletter subscription failed:', error);
+      setError('Failed to subscribe. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <footer className="bg-gray-900 dark:bg-gray-950 text-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,16 +68,37 @@ const Footer = () => {
             {/* Newsletter Signup */}
             <div className="space-y-3">
               <h4 className="font-semibold text-white">Stay Updated</h4>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 border border-gray-700 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
-                />
-                <button className="bg-primary-600 hover:bg-primary-700 px-6 py-2 rounded-lg font-semibold transition-colors">
-                  Subscribe
-                </button>
-              </div>
+              {isSuccess ? (
+                <div className="text-green-400 font-medium">
+                  Thank you for subscribing!
+                </div>
+              ) : (
+                <form onSubmit={handleNewsletterSubmit}>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        setError('');
+                      }}
+                      placeholder="Enter your email"
+                      className="flex-1 px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 border border-gray-700 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+                      disabled={isSubmitting}
+                    />
+                    <button 
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="bg-primary-600 hover:bg-primary-700 px-6 py-2 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                    </button>
+                  </div>
+                  {error && (
+                    <p className="text-red-400 text-sm mt-1">{error}</p>
+                  )}
+                </form>
+              )}
             </div>
           </div>
 

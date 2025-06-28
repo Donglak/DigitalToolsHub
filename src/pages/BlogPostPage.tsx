@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, User, Clock, Share2, Bookmark, Tag } from 'lucide-react';
+import NewsletterForm from '../components/NewsletterForm';
 
 const BlogPostPage = () => {
   const { slug } = useParams();
@@ -275,16 +276,7 @@ const BlogPostPage = () => {
           <p className="text-white/90 mb-6">
             Subscribe to get more insights on digital tools and strategies delivered to your inbox.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
-            />
-            <button className="bg-white text-primary-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold transition-colors">
-              Subscribe
-            </button>
-          </div>
+          <NewsletterForm />
         </div>
       </div>
     </div>
