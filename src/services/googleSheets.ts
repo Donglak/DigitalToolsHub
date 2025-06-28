@@ -9,7 +9,7 @@ export interface SubscriptionData {
 export const submitToGoogleSheets = async (data: SubscriptionData): Promise<boolean> => {
   try {
     // Replace with your Google Apps Script Web App URL
-    const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbwOSP2A5agVbE-K6zWmDxT131oFIXqzoLGZG_0D748gmrtRP5i3vY_hB415HIkEDf48lQ/exec';
+    const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbzicAhGcLdLAbStA0PcevOZllqmZtlJKJoHs8LRkxnO-_PiLk1-lGdJccIp0Cys-hMuXg/exec';
     
     const response = await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
