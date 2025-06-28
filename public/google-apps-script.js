@@ -1,69 +1,44 @@
-// Google Apps Script code để deploy như Web App
-// Deploy code này trong Google Apps Script và thêm URL vào environment variables
+// Google Apps Script code to deploy as a Web App
+// This should be deployed in Google Apps Script and the URL should be added to your environment variables
 
 function doPost(e) {
   try {
-    // Parse request data
+    // Parse the request data
     const data = JSON.parse(e.postData.contents);
     
-    // Thay YOUR_GOOGLE_SHEET_ID_HERE bằng Sheet ID thực tế của bạn
+    // Open the Google Sheet (replace with your sheet ID)
     const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID_HERE';
     const sheet = SpreadsheetApp.openById(SHEET_ID).getActiveSheet();
     
-    // Thêm headers nếu đây là row đầu tiên
+    // Add headers if this is the first row
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(['Timestamp', 'Name', 'Email', 'Source']);
     }
     
-    // Thêm dữ liệu subscription mới
+    // Add the new subscription data
     sheet.appendRow([
-      data.timestamp || new Date().toISOString(),
-      data.name || '',
-      data.email || '',
-      data.source || 'newsletter_popup'
+      data.timestamp,
+      data.name,
+      data.email,
+      data.source
     ]);
     
-    // Trả về response thành công
+    // Return success response
     return ContentService
-      .createTextOutput(JSON.stringify({ 
-        success: true, 
-        message: 'Email đã được lưu thành công' 
-      }))
+      .createTextOutput(JSON.stringify({ success: true, message: 'Subscription recorded' }))
       .setMimeType(ContentService.MimeType.JSON);
       
   } catch (error) {
-    // Trả về error response
+    // Return error response
     return ContentService
-      .createTextOutput(JSON.stringify({ 
-        success: false, 
-        error: error.toString() 
-      }))
+      .createTextOutput(JSON.stringify({ success: false, error: error.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
   }
 }
 
-// Xử lý GET requests (tùy chọn)
+// Handle GET requests (optional)
 function doGet(e) {
   return ContentService
-    .createTextOutput(JSON.stringify({ 
-      message: 'Newsletter subscription endpoint đang hoạt động' 
-    }))
+    .createTextOutput(JSON.stringify({ message: 'Newsletter subscription endpoint' }))
     .setMimeType(ContentService.MimeType.JSON);
-}
-
-// Function để test (chạy trong Apps Script editor)
-function testFunction() {
-  const testData = {
-    postData: {
-      contents: JSON.stringify({
-        name: 'Test User',
-        email: 'test@example.com',
-        timestamp: new Date().toISOString(),
-        source: 'test'
-      })
-    }
-  };
-  
-  const result = doPost(testData);
-  console.log(result.getContent());
 }
