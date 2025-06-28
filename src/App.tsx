@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import PopupManager from './components/PopupManager';
 import HomePage from './pages/HomePage';
 import ToolsPage from './pages/ToolsPage';
 import ToolDetailPage from './pages/ToolDetailPage';
@@ -48,6 +49,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <PopupManager />
       </div>
     </Router>
   );
