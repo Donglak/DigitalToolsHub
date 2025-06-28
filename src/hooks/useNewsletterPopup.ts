@@ -39,25 +39,7 @@ export const useNewsletterPopup = () => {
 
   const handleSubscribe = useCallback(async (email: string, name: string) => {
     try {
-      // Submit to Google Sheets
-      const response = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          timestamp: new Date().toISOString(),
-          source: 'popup'
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Subscription failed');
-      }
-
-      // Mark as subscribed
+      // Mark as subscribed locally
       localStorage.setItem(STORAGE_KEY, 'true');
       setIsSubscribed(true);
       
