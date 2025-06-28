@@ -16,12 +16,12 @@ const Footer = () => {
     setError('');
     
     if (!email.trim()) {
-      setError('Vui lòng nhập địa chỉ email');
+      setError('Please enter your email address');
       return;
     }
 
     if (!validateEmail(email.trim())) {
-      setError('Vui lòng nhập địa chỉ email hợp lệ');
+      setError('Please enter a valid email address');
       return;
     }
 
@@ -44,7 +44,7 @@ const Footer = () => {
       }, 3000);
     } catch (error) {
       console.error('Newsletter subscription failed:', error);
-      setError('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+      setError('An error occurred. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
@@ -63,17 +63,17 @@ const Footer = () => {
               <span className="text-xl font-bold">DigitalToolsHub</span>
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed max-w-md">
-              Khám phá những công cụ số tốt nhất cho AI, tự động hóa marketing và kiếm tiền online. 
-              Đánh giá chuyên sâu, so sánh và ưu đãi độc quyền để tăng năng suất và thu nhập của bạn.
+              Discover the best digital tools for AI, marketing automation, and making money online. 
+              Expert reviews, comparisons, and exclusive deals to boost your productivity and income.
             </p>
             
             {/* Newsletter Signup */}
             <div className="space-y-3">
-              <h4 className="font-semibold text-white">Nhận cập nhật mới nhất</h4>
+              <h4 className="font-semibold text-white">Stay Updated</h4>
               {isSuccess ? (
                 <div className="flex items-center gap-2 text-green-400 font-medium bg-green-500/10 p-3 rounded-lg">
                   <CheckCircle className="w-5 h-5" />
-                  Cảm ơn bạn đã đăng ký!
+                  Thank you for subscribing!
                 </div>
               ) : (
                 <form onSubmit={handleNewsletterSubmit}>
@@ -85,7 +85,7 @@ const Footer = () => {
                         setEmail(e.target.value);
                         setError('');
                       }}
-                      placeholder="Nhập email của bạn"
+                      placeholder="Enter your email"
                       className="flex-1 px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 border border-gray-700 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 transition-all"
                       disabled={isSubmitting}
                     />
@@ -97,7 +97,7 @@ const Footer = () => {
                       {isSubmitting ? (
                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto"></div>
                       ) : (
-                        'Đăng ký'
+                        'Subscribe'
                       )}
                     </button>
                   </div>
@@ -114,34 +114,34 @@ const Footer = () => {
 
           {/* Tools */}
           <div>
-            <h4 className="font-semibold mb-4 text-white">Danh mục</h4>
+            <h4 className="font-semibold mb-4 text-white">Categories</h4>
             <ul className="space-y-2">
-              <li><Link to="/tools?category=ai" className="text-gray-300 hover:text-white transition-colors">Công cụ AI</Link></li>
-              <li><Link to="/tools?category=marketing" className="text-gray-300 hover:text-white transition-colors">Công cụ Marketing</Link></li>
-              <li><Link to="/tools?category=mmo" className="text-gray-300 hover:text-white transition-colors">Công cụ MMO</Link></li>
-              <li><Link to="/tools?tag=free" className="text-gray-300 hover:text-white transition-colors">Công cụ miễn phí</Link></li>
+              <li><Link to="/tools?category=ai" className="text-gray-300 hover:text-white transition-colors">AI Tools</Link></li>
+              <li><Link to="/tools?category=marketing" className="text-gray-300 hover:text-white transition-colors">Marketing Tools</Link></li>
+              <li><Link to="/tools?category=mmo" className="text-gray-300 hover:text-white transition-colors">MMO Tools</Link></li>
+              <li><Link to="/tools?tag=free" className="text-gray-300 hover:text-white transition-colors">Free Tools</Link></li>
             </ul>
           </div>
 
           {/* Resources */}
           <div>
-            <h4 className="font-semibold mb-4 text-white">Tài nguyên</h4>
+            <h4 className="font-semibold mb-4 text-white">Resources</h4>
             <ul className="space-y-2">
               <li><Link to="/blog" className="text-gray-300 hover:text-white transition-colors">Blog</Link></li>
-              <li><Link to="/blog/guides" className="text-gray-300 hover:text-white transition-colors">Hướng dẫn</Link></li>
-              <li><Link to="/blog/reviews" className="text-gray-300 hover:text-white transition-colors">Đánh giá</Link></li>
-              <li><Link to="/blog/comparisons" className="text-gray-300 hover:text-white transition-colors">So sánh</Link></li>
+              <li><Link to="/blog/guides" className="text-gray-300 hover:text-white transition-colors">Guides</Link></li>
+              <li><Link to="/blog/reviews" className="text-gray-300 hover:text-white transition-colors">Reviews</Link></li>
+              <li><Link to="/blog/comparisons" className="text-gray-300 hover:text-white transition-colors">Comparisons</Link></li>
             </ul>
           </div>
 
           {/* Company */}
           <div>
-            <h4 className="font-semibold mb-4 text-white">Công ty</h4>
+            <h4 className="font-semibold mb-4 text-white">Company</h4>
             <ul className="space-y-2">
-              <li><Link to="/about" className="text-gray-300 hover:text-white transition-colors">Về chúng tôi</Link></li>
-              <li><Link to="/contact" className="text-gray-300 hover:text-white transition-colors">Liên hệ</Link></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Chính sách bảo mật</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Điều khoản dịch vụ</a></li>
+              <li><Link to="/about" className="text-gray-300 hover:text-white transition-colors">About Us</Link></li>
+              <li><Link to="/contact" className="text-gray-300 hover:text-white transition-colors">Contact</Link></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
             </ul>
           </div>
         </div>
@@ -151,14 +151,14 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex flex-col md:flex-row items-center gap-4 mb-4 md:mb-0">
               <p className="text-gray-300">
-                © 2024 DigitalToolsHub. Tất cả quyền được bảo lưu.
+                © 2024 DigitalToolsHub. All rights reserved.
               </p>
               <div className="flex gap-6">
                 <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                  Tiết lộ liên kết
+                  Affiliate Disclosure
                 </a>
                 <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                  Chính sách Cookie
+                  Cookie Policy
                 </a>
               </div>
             </div>
