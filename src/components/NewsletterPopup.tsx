@@ -22,13 +22,13 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
     const newErrors: {name?: string; email?: string} = {};
     
     if (!formData.name.trim()) {
-      newErrors.name = 'Tên là bắt buộc';
+      newErrors.name = 'Name is required';
     }
     
     if (!formData.email.trim()) {
-      newErrors.email = 'Email là bắt buộc';
+      newErrors.email = 'Email is required';
     } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Vui lòng nhập email hợp lệ';
+      newErrors.email = 'Please enter a valid email';
     }
     
     setErrors(newErrors);
@@ -64,7 +64,7 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
       }, 2000);
     } catch (error) {
       console.error('Subscription failed:', error);
-      setErrors({ email: 'Đã xảy ra lỗi. Vui lòng thử lại sau.' });
+      setErrors({ email: 'An error occurred. Please try again later.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -117,12 +117,12 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
                 )}
               </div>
               <h2 className="text-2xl font-bold mb-2">
-                {isSuccess ? 'Chào mừng bạn!' : 'Nhận quyền truy cập độc quyền'}
+                {isSuccess ? 'Welcome Aboard!' : 'Get Exclusive Access'}
               </h2>
               <p className="text-white/90">
                 {isSuccess 
-                  ? 'Cảm ơn bạn đã đăng ký! Bạn sẽ nhận được cập nhật về những công cụ mới nhất.'
-                  : 'Trở thành người đầu tiên khám phá những công cụ số mạnh mẽ và ưu đãi độc quyền'
+                  ? 'Thank you for subscribing! You\'ll receive updates on the latest tools.'
+                  : 'Be the first to discover powerful new digital tools and exclusive deals'
                 }
               </p>
             </div>
@@ -138,19 +138,19 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
                       <span className="text-sm text-gray-600 dark:text-gray-300">
-                        Cập nhật hàng tuần về công cụ thịnh hành
+                        Weekly updates on trending tools
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-2 bg-secondary-500 rounded-full"></div>
                       <span className="text-sm text-gray-600 dark:text-gray-300">
-                        Ưu đãi và giảm giá độc quyền
+                        Exclusive deals and discounts
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-2 bg-accent-500 rounded-full"></div>
                       <span className="text-sm text-gray-600 dark:text-gray-300">
-                        Đánh giá và so sánh chuyên sâu
+                        Expert reviews and comparisons
                       </span>
                     </div>
                   </div>
@@ -164,7 +164,7 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="Họ và tên của bạn"
+                      placeholder="Your full name"
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors ${
                         errors.name 
                           ? 'border-red-300 dark:border-red-600' 
@@ -185,7 +185,7 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="email@example.com"
+                      placeholder="your@email.com"
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors ${
                         errors.email 
                           ? 'border-red-300 dark:border-red-600' 
@@ -208,19 +208,19 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
                     {isSubmitting ? (
                       <>
                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                        Đang đăng ký...
+                        Subscribing...
                       </>
                     ) : (
                       <>
                         <Mail className="w-5 h-5" />
-                        Nhận cập nhật miễn phí
+                        Get Free Updates
                       </>
                     )}
                   </button>
                 </form>
 
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
-                  Không spam, hủy đăng ký bất cứ lúc nào. Chúng tôi tôn trọng quyền riêng tư của bạn.
+                  No spam, unsubscribe anytime. We respect your privacy.
                 </p>
               </>
             ) : (
@@ -229,10 +229,10 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
                   <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  Bạn đã sẵn sàng!
+                  You're all set!
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Kiểm tra email để xác nhận đăng ký.
+                  Check your email for a confirmation message.
                 </p>
               </div>
             )}

@@ -24,12 +24,12 @@ const NewsletterForm: React.FC<NewsletterFormProps> = ({
     
     // Validate email
     if (!email.trim()) {
-      setError('Vui lòng nhập địa chỉ email');
+      setError('Please enter your email address');
       return;
     }
 
     if (!validateEmail(email.trim())) {
-      setError('Vui lòng nhập địa chỉ email hợp lệ');
+      setError('Please enter a valid email address');
       return;
     }
 
@@ -63,7 +63,7 @@ const NewsletterForm: React.FC<NewsletterFormProps> = ({
 
     } catch (error) {
       console.error('Newsletter subscription failed:', error);
-      setError('Đã xảy ra lỗi khi đăng ký. Vui lòng thử lại sau.');
+      setError('An error occurred while subscribing. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
@@ -74,8 +74,8 @@ const NewsletterForm: React.FC<NewsletterFormProps> = ({
       <div className={`flex items-center justify-center gap-3 text-white bg-green-500/20 backdrop-blur-sm rounded-lg p-4 ${className}`}>
         <CheckCircle className="w-6 h-6 text-green-400" />
         <div className="text-center">
-          <div className="font-semibold">Cảm ơn bạn đã đăng ký!</div>
-          <div className="text-sm text-white/80">Chúng tôi sẽ gửi những thông tin hữu ích nhất đến email của bạn.</div>
+          <div className="font-semibold">Thank you for subscribing!</div>
+          <div className="text-sm text-white/80">We'll send you the most valuable insights to your email.</div>
         </div>
       </div>
     );
@@ -92,7 +92,7 @@ const NewsletterForm: React.FC<NewsletterFormProps> = ({
               setEmail(e.target.value);
               setError(''); // Clear error when user types
             }}
-            placeholder="Nhập email của bạn"
+            placeholder="Enter your email"
             className="w-full px-6 py-4 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
             disabled={isSubmitting}
             required
@@ -112,19 +112,19 @@ const NewsletterForm: React.FC<NewsletterFormProps> = ({
           {isSubmitting ? (
             <>
               <div className="w-5 h-5 border-2 border-primary-600/30 border-t-primary-600 rounded-full animate-spin"></div>
-              Đang gửi...
+              Subscribing...
             </>
           ) : (
             <>
               <Mail className="w-5 h-5" />
-              Đăng ký
+              Subscribe
             </>
           )}
         </button>
       </div>
       
       <p className="text-white/70 text-sm text-center">
-        Tham gia cùng 50,000+ người đăng ký. Không spam, hủy đăng ký bất cứ lúc nào.
+        Join 50,000+ subscribers. No spam, unsubscribe anytime.
       </p>
     </form>
   );
