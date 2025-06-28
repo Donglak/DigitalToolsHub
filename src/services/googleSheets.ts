@@ -9,7 +9,7 @@ export interface SubscriptionData {
 export const submitToGoogleSheets = async (data: SubscriptionData): Promise<boolean> => {
   try {
     // Replace with your Google Apps Script Web App URL
-    const GOOGLE_SCRIPT_URL = process.env.VITE_GOOGLE_SCRIPT_URL || 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+    const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL || 'YOUR_GOOGLE_SCRIPT_URL_HERE';
     
     const response = await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
