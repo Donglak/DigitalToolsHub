@@ -21,13 +21,13 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
     const newErrors: {name?: string; email?: string} = {};
     
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = 'Tên là bắt buộc';
     }
     
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = 'Email là bắt buộc';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email';
+      newErrors.email = 'Vui lòng nhập email hợp lệ';
     }
     
     setErrors(newErrors);
@@ -45,14 +45,18 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
       await onSubscribe(formData.email, formData.name);
       setIsSuccess(true);
       
-      // Close popup after 2 seconds of success
+      // Đóng popup sau 2 giây thành công
       setTimeout(() => {
         onClose();
         setIsSuccess(false);
         setFormData({ name: '', email: '' });
       }, 2000);
     } catch (error) {
-      console.error('Subscription failed:', error);
+      console.error('Đăng ký thất bại:', error);
+      // Hiển thị thông báo lỗi cho người dùng
+      setErrors({ 
+        email: error instanceof Error ? error.message : 'Có lỗi xảy ra, vui lòng thử lại' 
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -62,7 +66,7 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Clear error when user starts typing
+    // Xóa lỗi khi người dùng bắt đầu nhập
     if (errors[name as keyof typeof errors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
@@ -87,7 +91,7 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
           className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Header with gradient background */}
+          {/* Header với gradient background */}
           <div className="bg-gradient-to-r from-primary-600 to-secondary-600 p-6 text-white relative">
             <button
               onClick={onClose}
@@ -105,12 +109,12 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
                 )}
               </div>
               <h2 className="text-2xl font-bold mb-2">
-                {isSuccess ? 'Welcome Aboard!' : 'Get Exclusive Access'}
+                {isSuccess ? 'Chào mừng bạn!' : 'Nhận thông tin độc quyền'}
               </h2>
               <p className="text-white/90">
                 {isSuccess 
-                  ? 'Thank you for subscribing! You\'ll receive updates on the latest tools.'
-                  : 'Be the first to discover powerful new digital tools and exclusive deals'
+                  ? 'Cảm ơn bạn đã đăng ký! Bạn sẽ nhận được cập nhật về các công cụ mới nhất.'
+                  : 'Là người đầu tiên khám phá các công cụ số mạnh mẽ và ưu đãi độc quyền'
                 }
               </p>
             </div>
@@ -120,25 +124,25 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
           <div className="p-6">
             {!isSuccess ? (
               <>
-                {/* Benefits */}
+                {/* Lợi ích */}
                 <div className="mb-6">
                   <div className="grid grid-cols-1 gap-3">
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
                       <span className="text-sm text-gray-600 dark:text-gray-300">
-                        Weekly updates on trending tools
+                        Cập nhật hàng tuần về các công cụ thịnh hành
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-2 bg-secondary-500 rounded-full"></div>
                       <span className="text-sm text-gray-600 dark:text-gray-300">
-                        Exclusive deals and discounts
+                        Ưu đãi và giảm giá độc quyền
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-2 bg-accent-500 rounded-full"></div>
                       <span className="text-sm text-gray-600 dark:text-gray-300">
-                        Expert reviews and comparisons
+                        Đánh giá chuyên gia và so sánh
                       </span>
                     </div>
                   </div>
@@ -152,7 +156,7 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="Your full name"
+                      placeholder="Họ và tên của bạn"
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors ${
                         errors.name 
                           ? 'border-red-300 dark:border-red-600' 
@@ -170,7 +174,7 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="your@email.com"
+                      placeholder="email@example.com"
                       className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors ${
                         errors.email 
                           ? 'border-red-300 dark:border-red-600' 
@@ -190,19 +194,19 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
                     {isSubmitting ? (
                       <>
                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                        Subscribing...
+                        Đang đăng ký...
                       </>
                     ) : (
                       <>
                         <Mail className="w-5 h-5" />
-                        Get Free Updates
+                        Nhận cập nhật miễn phí
                       </>
                     )}
                   </button>
                 </form>
 
                 <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-4">
-                  No spam, unsubscribe anytime. We respect your privacy.
+                  Không spam, hủy đăng ký bất cứ lúc nào. Chúng tôi tôn trọng quyền riêng tư của bạn.
                 </p>
               </>
             ) : (
@@ -211,10 +215,10 @@ const NewsletterPopup: React.FC<NewsletterPopupProps> = ({ isOpen, onClose, onSu
                   <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                  You're all set!
+                  Bạn đã sẵn sàng!
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Check your email for a confirmation message.
+                  Kiểm tra email để xác nhận đăng ký.
                 </p>
               </div>
             )}
