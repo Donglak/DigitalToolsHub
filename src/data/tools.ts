@@ -469,5 +469,20 @@ export const tools: Tool[] = [
     freeTrial: true,
     website: 'https://stripe.com',
     company: 'Stripe'
+  },
+  {
+   id: 31,
+    name: 'Activecampaign',
+    category: 'marketing',
+    description: 'Active Intelligence helps you win the day, every day, with AI agents that understand your business goals and bring your vision to life across your marketing channels',
+    price: 'Free - $350/month',
+    rating: 4.48,
+    reviews: 28930,
+    image: 'https://images.pexels.com/photos/1591062/pexels-photo-1591062.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
+    tags: ['Email Marketing', 'Automation', 'Analytics', 'Audience'],
+    featured: false,
+    freeTrial: true,
+    website: 'https://www.activecampaign.com/?_r=45QV56BN',
+    company: 'Activecampaign'
   }
 ];
