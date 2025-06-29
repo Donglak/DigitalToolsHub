@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Bot, TrendingUp, DollarSign, Star, Users, Award, CheckCircle, Mail } from 'lucide-react';
 import NewsletterForm from '../components/NewsletterForm';
+import { tools } from '../data/tools';
 
 const HomePage = () => {
   const categories = [
@@ -10,21 +11,21 @@ const HomePage = () => {
       title: 'AI Tools',
       description: 'Cutting-edge artificial intelligence tools to automate and enhance your workflow',
       color: 'from-blue-500 to-purple-600',
-      tools: '150+ Tools'
+      tools: `${tools.filter(t => t.category === 'ai').length}+ Tools`
     },
     {
       icon: TrendingUp,
       title: 'Marketing Tools',
       description: 'Powerful marketing automation and analytics tools to grow your business',
       color: 'from-green-500 to-teal-600',
-      tools: '200+ Tools'
+      tools: `${tools.filter(t => t.category === 'marketing').length}+ Tools`
     },
     {
       icon: DollarSign,
       title: 'MMO Tools',
       description: 'Proven tools and platforms to help you make money online effectively',
       color: 'from-orange-500 to-red-600',
-      tools: '100+ Tools'
+      tools: `${tools.filter(t => t.category === 'mmo').length}+ Tools`
     }
   ];
 
@@ -56,11 +57,17 @@ const HomePage = () => {
   ];
 
   const stats = [
-    { number: '450+', label: 'Digital Tools' },
+    { number: `${tools.length}+`, label: 'Digital Tools' },
     { number: '50K+', label: 'Happy Users' },
     { number: '98%', label: 'Success Rate' },
     { number: '$2M+', label: 'Saved by Users' }
   ];
+
+  // Get trending tools (featured tools with high ratings)
+  const trendingTools = tools
+    .filter(tool => tool.featured)
+    .sort((a, b) => b.rating - a.rating)
+    .slice(0, 3);
 
   return (
     <div className="pt-16">
@@ -106,44 +113,28 @@ const HomePage = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                        <Bot className="w-5 h-5 text-white" />
+                  {trendingTools.map((tool, index) => (
+                    <Link
+                      key={tool.id}
+                      to={`/tools/${tool.id}`}
+                      className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-10 h-10 bg-gradient-to-r ${categories[index]?.color || 'from-gray-500 to-gray-600'} rounded-lg flex items-center justify-center`}>
+                          {tool.category === 'ai' && <Bot className="w-5 h-5 text-white" />}
+                          {tool.category === 'marketing' && <TrendingUp className="w-5 h-5 text-white" />}
+                          {tool.category === 'mmo' && <DollarSign className="w-5 h-5 text-white" />}
+                        </div>
+                        <div>
+                          <div className="font-medium text-gray-900 dark:text-white">{tool.name}</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400 capitalize">{tool.category} Tool</div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-white">ChatGPT Plus</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">AI Assistant</div>
+                      <div className="text-green-600 dark:text-green-400 font-semibold">
+                        {tool.price.split(' ')[0]}
                       </div>
-                    </div>
-                    <div className="text-green-600 dark:text-green-400 font-semibold">$20/mo</div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-teal-600 rounded-lg flex items-center justify-center">
-                        <TrendingUp className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-white">HubSpot</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">Marketing Hub</div>
-                      </div>
-                    </div>
-                    <div className="text-green-600 dark:text-green-400 font-semibold">Free</div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
-                        <DollarSign className="w-5 h-5 text-white" />
-                      </div>
-                      <div>
-                        <div className="font-medium text-gray-900 dark:text-white">Shopify</div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">E-commerce</div>
-                      </div>
-                    </div>
-                    <div className="text-green-600 dark:text-green-400 font-semibold">$29/mo</div>
-                  </div>
+                    </Link>
+                  ))}
                 </div>
               </div>
             </div>

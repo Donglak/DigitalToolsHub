@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Search, Filter, Grid, List, Star, ExternalLink, Tag, DollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { tools } from '../data/tools';
 
 const ToolsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -8,87 +9,6 @@ const ToolsPage = () => {
   const [selectedPricing, setSelectedPricing] = useState('all');
   const [sortBy, setSortBy] = useState('popularity');
   const [viewMode, setViewMode] = useState('grid');
-
-  const tools = [
-    {
-      id: 1,
-      name: 'ChatGPT Plus',
-      category: 'ai',
-      description: 'Advanced AI assistant for writing, coding, analysis, and creative tasks',
-      price: '$20/month',
-      rating: 4.8,
-      reviews: 15420,
-      image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-      tags: ['AI', 'Writing', 'Coding'],
-      featured: true,
-      freeTrial: true
-    },
-    {
-      id: 2,
-      name: 'HubSpot Marketing Hub',
-      category: 'marketing',
-      description: 'Complete marketing automation platform with CRM, email marketing, and analytics',
-      price: 'Free - $3,200/month',
-      rating: 4.6,
-      reviews: 8930,
-      image: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-      tags: ['Marketing', 'CRM', 'Email'],
-      featured: false,
-      freeTrial: true
-    },
-    {
-      id: 3,
-      name: 'Shopify',
-      category: 'mmo',
-      description: 'Complete e-commerce platform to start, grow, and manage your online business',
-      price: '$29 - $299/month',
-      rating: 4.7,
-      reviews: 12450,
-      image: 'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-      tags: ['E-commerce', 'Online Store', 'Dropshipping'],
-      featured: true,
-      freeTrial: true
-    },
-    {
-      id: 4,
-      name: 'Midjourney',
-      category: 'ai',
-      description: 'AI-powered image generation tool for creating stunning artwork and designs',
-      price: '$10 - $60/month',
-      rating: 4.9,
-      reviews: 9870,
-      image: 'https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-      tags: ['AI', 'Design', 'Art'],
-      featured: false,
-      freeTrial: false
-    },
-    {
-      id: 5,
-      name: 'Mailchimp',
-      category: 'marketing',
-      description: 'Email marketing platform with automation, analytics, and audience management',
-      price: 'Free - $350/month',
-      rating: 4.4,
-      reviews: 18920,
-      image: 'https://images.pexels.com/photos/1591062/pexels-photo-1591062.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-      tags: ['Email Marketing', 'Automation', 'Analytics'],
-      featured: false,
-      freeTrial: true
-    },
-    {
-      id: 6,
-      name: 'ClickFunnels',
-      category: 'mmo',
-      description: 'Sales funnel builder to create high-converting landing pages and sales funnels',
-      price: '$97 - $297/month',
-      rating: 4.5,
-      reviews: 7650,
-      image: 'https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop',
-      tags: ['Sales Funnels', 'Landing Pages', 'Conversion'],
-      featured: true,
-      freeTrial: true
-    }
-  ];
 
   const categories = [
     { value: 'all', label: 'All Categories' },
@@ -141,6 +61,13 @@ const ToolsPage = () => {
     return filtered;
   }, [searchTerm, selectedCategory, selectedPricing, sortBy]);
 
+  const categoryStats = {
+    all: tools.length,
+    ai: tools.filter(t => t.category === 'ai').length,
+    marketing: tools.filter(t => t.category === 'marketing').length,
+    mmo: tools.filter(t => t.category === 'mmo').length
+  };
+
   return (
     <div className="pt-16 min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -149,9 +76,37 @@ const ToolsPage = () => {
           <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Digital Tools Directory
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
             Discover and compare the best digital tools for your business
           </p>
+          
+          {/* Category Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 text-center shadow-soft">
+              <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">
+                {categoryStats.all}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Total Tools</div>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 text-center shadow-soft">
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                {categoryStats.ai}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">AI Tools</div>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 text-center shadow-soft">
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+                {categoryStats.marketing}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Marketing Tools</div>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 text-center shadow-soft">
+              <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+                {categoryStats.mmo}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">MMO Tools</div>
+            </div>
+          </div>
         </div>
 
         {/* Filters */}
@@ -213,7 +168,7 @@ const ToolsPage = () => {
           {/* View Mode Toggle */}
           <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
             <div className="text-sm text-gray-600 dark:text-gray-400">
-              Showing {filteredTools.length} tools
+              Showing {filteredTools.length} of {tools.length} tools
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -290,7 +245,7 @@ const ToolsPage = () => {
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {tool.tags.map((tag, index) => (
+                  {tool.tags.slice(0, 3).map((tag, index) => (
                     <span
                       key={index}
                       className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full text-xs"
@@ -298,6 +253,11 @@ const ToolsPage = () => {
                       {tag}
                     </span>
                   ))}
+                  {tool.tags.length > 3 && (
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      +{tool.tags.length - 3} more
+                    </span>
+                  )}
                 </div>
 
                 {/* Price and Actions */}
@@ -321,7 +281,9 @@ const ToolsPage = () => {
                       Details
                     </Link>
                     <a
-                      href="#"
+                      href={tool.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1"
                     >
                       Try Now
