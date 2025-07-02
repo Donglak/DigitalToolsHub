@@ -11,7 +11,7 @@ export interface SubscriptionData {
 export const submitToGoogleSheets = async (data: SubscriptionData): Promise<boolean> => {
   try {
     // Get the Google Apps Script Web App URL from environment variables
-    const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+    const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbzicAhGcLdLAbStA0PcevOZllqmZtlJKJoHs8LRkxnO-_PiLk1-lGdJccIp0Cys-hMuXg/exec;
     
     if (!GOOGLE_SCRIPT_URL) {
       console.error('Google Script URL not configured');
