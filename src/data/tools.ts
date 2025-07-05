@@ -8959,7 +8959,7 @@ export const tools: Tool[] = [
     id: 597,
     name: 'steve.ai',
     category: 'Video Generator',
-    description: 'Steve AI is an AI video maker for social media and content marketers for creating Live and Animated videos. With Steve AIs assistance, you can turn blog posts, script, or text content into bite-sized videos for social media. It's features include Creative AI, Search AI and Fully Automated Solution.',
+    description: 'Steve AI is an AI video maker for social media and content marketers for creating Live and Animated videos. With Steve AIs assistance, you can turn blog posts, script, or text content into bite-sized videos for social media. Its features include Creative AI, Search AI and Fully Automated Solution.',
     price: 'Free - $20/month',
     rating: 4.1,
     reviews: 19849,
