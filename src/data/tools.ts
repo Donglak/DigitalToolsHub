@@ -739,7 +739,7 @@ export const tools: Tool[] = [
     id: 49,
     name: 'avatarify.art',
     category: 'Avatars',
-    description: 'Create personalized avatars using artificial intelligence. Their technology allows you to generate lifelike representations of people, animals, and even fictional characters. Just pay for the GPUs you rent. If you don't like it, they re-render the avatars.',
+    description: 'Create personalized avatars using artificial intelligence. Their technology allows you to generate lifelike representations of people, animals, and even fictional characters. Just pay for the GPUs you rent. If you dont like it, they re-render the avatars.',
     price: 'Free - $20/month',
     rating: 4.2,
     reviews: 4638,
