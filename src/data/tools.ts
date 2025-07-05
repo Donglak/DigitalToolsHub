@@ -64,7 +64,7 @@ export const tools: Tool[] = [
     id: 4,
     name: 'prometheanai.com',
     category: '3D',
-    description: 'Promethean AI is world's first Artificial Intelligence that works together with Artists, assists them in the process of building virtual worlds and helps creative problem solving by suggesting ideas.',
+    description: 'Promethean AI is world first Artificial Intelligence that works together with Artists, assists them in the process of building virtual worlds and helps creative problem solving by suggesting ideas.',
     price: 'Free - $20/month',
     rating: 4.8,
     reviews: 25166,
