@@ -23,7 +23,7 @@ export const tools: Tool[] = [
     price: 'Free - $20/month',
     rating: 4.8,
     reviews: 13133,
-    image: 'https://www.google.com/s2/favicons?domain=masterpiecestudio.com&sz=32',
+    image: 'https://www.google.com/s2/favicons?domain=masterpiecestudio.com&sz=4',
     tags: ['AI'],
     featured: true,
     freeTrial: true,
