@@ -7073,7 +7073,7 @@ export const tools: Tool[] = [
     price: 'Free - $20/month',
     rating: 4.7,
     reviews: 29975,
-    image: 'https://www.google.com/s2/favicons?domain=writesonic.com&sz=64',
+    image: 'https://i0.wp.com/software.centrix.asia/wp-content/uploads/2024/10/Ban-quyen-Writesonic-Pro.png?',
     tags: ['AI'],
     featured: true,
     freeTrial: true,
