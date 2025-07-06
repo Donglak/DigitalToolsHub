@@ -4673,7 +4673,7 @@ export const tools: Tool[] = [
     price: 'Free - $20/month',
     rating: 4.1,
     reviews: 29001,
-    image: 'https://www.google.com/s2/favicons?domain=detangle.ai&sz=64',
+    image: 'https://cdn.prod.website-files.com/64f605bdfa749671fed117a9/655f9834ee0b143a31b229ed_DetangleAI.png',
     tags: ['AI'],
     featured: true,
     freeTrial: true,
