@@ -14,7 +14,9 @@ const ToolsPage = () => {
     { value: 'all', label: 'All Categories' },
     { value: 'ai', label: 'AI Tools' },
     { value: 'marketing', label: 'Marketing Tools' },
-    { value: 'mmo', label: 'MMO Tools' }
+    { value: 'mmo', label: 'MMO Tools' },
+    { value: 'saas', label: 'SaaS Tools' },
+    { value: 'design', label: 'Design Tools' }
   ];
 
   const pricingOptions = [
@@ -65,7 +67,9 @@ const ToolsPage = () => {
     all: tools.length,
     ai: tools.filter(t => t.category === 'ai').length,
     marketing: tools.filter(t => t.category === 'marketing').length,
-    mmo: tools.filter(t => t.category === 'mmo').length
+    mmo: tools.filter(t => t.category === 'mmo').length,
+    saas: tools.filter(t => t.category === 'saas').length,
+    design: tools.filter(t => t.category === 'design').length
   };
 
   return (
@@ -81,7 +85,7 @@ const ToolsPage = () => {
           </p>
           
           {/* Category Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             <div className="bg-white dark:bg-gray-800 rounded-lg p-4 text-center shadow-soft">
               <div className="text-2xl font-bold text-primary-600 dark:text-primary-400">
                 {categoryStats.all}
@@ -105,6 +109,18 @@ const ToolsPage = () => {
                 {categoryStats.mmo}
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">MMO Tools</div>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 text-center shadow-soft">
+              <div className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+                {categoryStats.saas}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">SaaS Tools</div>
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 text-center shadow-soft">
+              <div className="text-2xl font-bold text-pink-600 dark:text-pink-400">
+                {categoryStats.design}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Design Tools</div>
             </div>
           </div>
         </div>

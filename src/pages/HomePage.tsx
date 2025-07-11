@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Bot, TrendingUp, DollarSign, Star, Users, Award, CheckCircle, Mail } from 'lucide-react';
+import { ArrowRight, Bot, TrendingUp, DollarSign, Star, Users, Award, CheckCircle, Mail, Server, Palette } from 'lucide-react';
 import NewsletterForm from '../components/NewsletterForm';
 import { tools } from '../data/tools';
 
@@ -26,6 +26,20 @@ const HomePage = () => {
       description: 'Proven tools and platforms to help you make money online effectively',
       color: 'from-orange-500 to-red-600',
       tools: `${tools.filter(t => t.category === 'mmo').length}+ Tools`
+    },
+    {
+      icon: Server,
+      title: 'SaaS Tools',
+      description: 'Software-as-a-Service solutions for business productivity and collaboration',
+      color: 'from-indigo-500 to-blue-600',
+      tools: `${tools.filter(t => t.category === 'saas').length}+ Tools`
+    },
+    {
+      icon: Palette,
+      title: 'Design Tools',
+      description: 'Creative design software for graphics, UI/UX, and digital art creation',
+      color: 'from-pink-500 to-rose-600',
+      tools: `${tools.filter(t => t.category === 'design').length}+ Tools`
     }
   ];
 
@@ -124,6 +138,8 @@ const HomePage = () => {
                           {tool.category === 'ai' && <Bot className="w-5 h-5 text-white" />}
                           {tool.category === 'marketing' && <TrendingUp className="w-5 h-5 text-white" />}
                           {tool.category === 'mmo' && <DollarSign className="w-5 h-5 text-white" />}
+                          {tool.category === 'saas' && <Server className="w-5 h-5 text-white" />}
+                          {tool.category === 'design' && <Palette className="w-5 h-5 text-white" />}
                         </div>
                         <div>
                           <div className="font-medium text-gray-900 dark:text-white">{tool.name}</div>
@@ -168,24 +184,24 @@ const HomePage = () => {
               Explore Tool Categories
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Discover powerful digital tools across three main categories designed to boost your productivity and income
+              Discover powerful digital tools across five main categories designed to boost your productivity and income
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             {categories.map((category, index) => (
               <Link
                 key={index}
-                to={`/tools?category=${category.title.toLowerCase().split(' ')[0]}`}
-                className="group bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-soft hover:shadow-large transition-all duration-300 transform hover:-translate-y-2"
+                to={`/tools?category=${category.title.toLowerCase().replace(' tools', '')}`}
+                className="group bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-soft hover:shadow-large transition-all duration-300 transform hover:-translate-y-2"
               >
-                <div className={`w-16 h-16 bg-gradient-to-r ${category.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                  <category.icon className="w-8 h-8 text-white" />
+                <div className={`w-12 h-12 bg-gradient-to-r ${category.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                  <category.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
                   {category.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 leading-relaxed">
                   {category.description}
                 </p>
                 <div className="flex items-center justify-between">
