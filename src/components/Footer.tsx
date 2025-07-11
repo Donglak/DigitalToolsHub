@@ -121,6 +121,7 @@ const Footer = () => {
               <li><Link to="/tools?category=mmo" className="text-gray-300 hover:text-white transition-colors">MMO Tools</Link></li>
               <li><Link to="/tools?category=saas" className="text-gray-300 hover:text-white transition-colors">SaaS Tools</Link></li>
               <li><Link to="/tools?category=design" className="text-gray-300 hover:text-white transition-colors">Design Tools</Link></li>
+              <li><Link to="/tools?category=automation" className="text-gray-300 hover:text-white transition-colors">Automation Tools</Link></li>
               <li><Link to="/tools?tag=free" className="text-gray-300 hover:text-white transition-colors">Free Tools</Link></li>
             </ul>
           </div>

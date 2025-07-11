@@ -1,11 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { Search, Filter, Grid, List, Star, ExternalLink, Tag, DollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { tools } from '../data/tools';
+import { tools, aiSubcategories } from '../data/tools';
 
 const ToolsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedSubcategory, setSelectedSubcategory] = useState('all');
   const [selectedPricing, setSelectedPricing] = useState('all');
   const [sortBy, setSortBy] = useState('popularity');
   const [viewMode, setViewMode] = useState('grid');
@@ -16,7 +17,13 @@ const ToolsPage = () => {
     { value: 'marketing', label: 'Marketing Tools' },
     { value: 'mmo', label: 'MMO Tools' },
     { value: 'saas', label: 'SaaS Tools' },
-    { value: 'design', label: 'Design Tools' }
+    { value: 'design', label: 'Design Tools' },
+    { value: 'automation', label: 'Automation Tools' }
+  ];
+
+  const subcategoryOptions = [
+    { value: 'all', label: 'All Subcategories' },
+    ...aiSubcategories.map(sub => ({ value: sub, label: sub }))
   ];
 
   const pricingOptions = [
@@ -33,13 +40,14 @@ const ToolsPage = () => {
                            tool.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
       
       const matchesCategory = selectedCategory === 'all' || tool.category === selectedCategory;
+      const matchesSubcategory = selectedSubcategory === 'all' || tool.subcategory === selectedSubcategory;
       
       const matchesPricing = selectedPricing === 'all' || 
                             (selectedPricing === 'free' && tool.price.includes('Free')) ||
                             (selectedPricing === 'paid' && !tool.price.includes('Free')) ||
                             (selectedPricing === 'freemium' && tool.price.includes('Free') && tool.price.includes('-'));
       
-      return matchesSearch && matchesCategory && matchesPricing;
+      return matchesSearch && matchesCategory && matchesSubcategory && matchesPricing;
     });
 
     // Sort tools
@@ -69,7 +77,8 @@ const ToolsPage = () => {
     marketing: tools.filter(t => t.category === 'marketing').length,
     mmo: tools.filter(t => t.category === 'mmo').length,
     saas: tools.filter(t => t.category === 'saas').length,
-    design: tools.filter(t => t.category === 'design').length
+    design: tools.filter(t => t.category === 'design').length,
+    automation: tools.filter(t => t.category === 'automation').length
   };
 
   return (
@@ -122,12 +131,18 @@ const ToolsPage = () => {
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400">Design Tools</div>
             </div>
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-4 text-center shadow-soft">
+              <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
+                {categoryStats.automation}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Automation Tools</div>
+            </div>
           </div>
         </div>
 
         {/* Filters */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-soft p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
             {/* Search */}
             <div className="lg:col-span-2">
               <div className="relative">
@@ -154,6 +169,21 @@ const ToolsPage = () => {
                 </option>
               ))}
             </select>
+
+            {/* Subcategory Filter (only show for AI category) */}
+            {selectedCategory === 'ai' && (
+              <select
+                value={selectedSubcategory}
+                onChange={(e) => setSelectedSubcategory(e.target.value)}
+                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              >
+                {subcategoryOptions.map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            )}
 
             {/* Pricing Filter */}
             <select
@@ -254,6 +284,15 @@ const ToolsPage = () => {
                     </span>
                   )}
                 </div>
+
+                {/* Subcategory Badge */}
+                {tool.subcategory && (
+                  <div className="mb-3">
+                    <span className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-1 rounded-full text-xs font-medium">
+                      {tool.subcategory}
+                    </span>
+                  </div>
+                )}
 
                 <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
                   {tool.description}

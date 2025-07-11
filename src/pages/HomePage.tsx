@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Bot, TrendingUp, DollarSign, Star, Users, Award, CheckCircle, Mail, Server, Palette } from 'lucide-react';
+import { ArrowRight, Bot, TrendingUp, DollarSign, Star, Users, Award, CheckCircle, Mail, Server, Palette, Zap } from 'lucide-react';
 import NewsletterForm from '../components/NewsletterForm';
 import { tools } from '../data/tools';
 
@@ -40,6 +40,13 @@ const HomePage = () => {
       description: 'Creative design software for graphics, UI/UX, and digital art creation',
       color: 'from-pink-500 to-rose-600',
       tools: `${tools.filter(t => t.category === 'design').length}+ Tools`
+    },
+    {
+      icon: Zap,
+      title: 'Automation Tools',
+      description: 'Workflow automation and integration tools to streamline your processes',
+      color: 'from-yellow-500 to-orange-600',
+      tools: `${tools.filter(t => t.category === 'automation').length}+ Tools`
     }
   ];
 
@@ -189,24 +196,75 @@ const HomePage = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-            {categories.map((category, index) => (
+            <div className="xl:col-span-5">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {categories.slice(0, 6).map((category, index) => (
+                  <Link
+                    key={index}
+                    to={`/tools?category=${category.title.toLowerCase().replace(' tools', '')}`}
+                    className="group bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-soft hover:shadow-large transition-all duration-300 transform hover:-translate-y-2"
+                  >
+                    <div className={`w-12 h-12 bg-gradient-to-r ${category.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                      <category.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                      {category.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 leading-relaxed">
+                      {category.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-primary-600 dark:text-primary-400">
+                        {category.tools}
+                      </span>
+                      <ArrowRight className="w-5 h-5 text-primary-600 dark:text-primary-400 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AI Subcategories Section */}
+      <section className="py-20 bg-white dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              AI Tools by Category
+            </h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              Explore specialized AI tools organized by their specific use cases and applications
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: 'AI Productivity Tools', icon: Bot, color: 'from-blue-500 to-indigo-600', count: tools.filter(t => t.subcategory === 'AI Productivity Tools').length },
+              { name: 'AI Text Generators', icon: TrendingUp, color: 'from-green-500 to-emerald-600', count: tools.filter(t => t.subcategory === 'AI Text Generators').length },
+              { name: 'AI Image Tools', icon: Palette, color: 'from-purple-500 to-pink-600', count: tools.filter(t => t.subcategory === 'AI Image Tools').length },
+              { name: 'AI Art Generators', icon: Palette, color: 'from-pink-500 to-rose-600', count: tools.filter(t => t.subcategory === 'AI Art Generators').length },
+              { name: 'AI Video Tools', icon: Server, color: 'from-red-500 to-orange-600', count: tools.filter(t => t.subcategory === 'AI Video Tools').length },
+              { name: 'AI Audio Generators', icon: Server, color: 'from-yellow-500 to-amber-600', count: tools.filter(t => t.subcategory === 'AI Audio Generators').length },
+              { name: 'AI Code Tools', icon: Bot, color: 'from-indigo-500 to-blue-600', count: tools.filter(t => t.subcategory === 'AI Code Tools').length },
+              { name: 'AI Business Tools', icon: DollarSign, color: 'from-teal-500 to-cyan-600', count: tools.filter(t => t.subcategory === 'AI Business Tools').length },
+              { name: 'Misc AI Tools', icon: Zap, color: 'from-gray-500 to-slate-600', count: tools.filter(t => t.subcategory === 'Misc AI Tools').length }
+            ].map((subcategory, index) => (
               <Link
-                key={index}
-                to={`/tools?category=${category.title.toLowerCase().replace(' tools', '')}`}
-                className="group bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-soft hover:shadow-large transition-all duration-300 transform hover:-translate-y-2"
+                key={index} 
+                to={`/tools?subcategory=${encodeURIComponent(subcategory.name)}`}
+                className="group bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-soft hover:shadow-medium transition-all duration-300 transform hover:-translate-y-1"
               >
-                <div className={`w-12 h-12 bg-gradient-to-r ${category.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <category.icon className="w-6 h-6 text-white" />
+                <div className={`w-10 h-10 bg-gradient-to-r ${subcategory.color} rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                  <subcategory.icon className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
-                  {category.title}
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                  {subcategory.name}
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 leading-relaxed">
-                  {category.description}
-                </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-primary-600 dark:text-primary-400">
-                    {category.tools}
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                    {subcategory.count} tools
                   </span>
                   <ArrowRight className="w-5 h-5 text-primary-600 dark:text-primary-400 group-hover:translate-x-1 transition-transform" />
                 </div>
